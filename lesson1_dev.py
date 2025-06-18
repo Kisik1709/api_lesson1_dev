@@ -1,24 +1,28 @@
 import requests
 
+URL_WEATHER = "https://wttr.in/{}"
+PARAMS = {
+    "m": "",
+    "M": "",
+    "n": "",
+    "q": "",
+    "T": "",
+    "lang": "ru"
+}
+
+
+def show_weather(city):
+    url = URL_WEATHER.format(city)
+    responce = requests.get(url, params=PARAMS)
+    responce.raise_for_status()
+    return responce.text
+
 
 def main():
-
-    url = ["https://wttr.in/Лондон",
-           "https://wttr.in/svo", "https://wttr.in/Череповец"]
-    params = {
-        "m": "",
-        "M": "",
-        "n": "",
-        "q": "",
-        "T": "",
-        "lang": "ru"
-    }
-
+    locations = ["Лондон", "svo", "Череповец"]
     try:
-        for link in url:
-            responce = requests.get(link, params=params)
-            responce.raise_for_status()
-            print(responce.text)
+        for city in locations:
+            print(show_weather(city))
     except requests.exceptions.RequestException as e:
         print("Ошибка при запросе:", e)
 
