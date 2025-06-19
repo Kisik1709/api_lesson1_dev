@@ -1,6 +1,6 @@
 import requests
 
-URL_WEATHER = "https://wttr.in/{}"
+WEATHER_URL = "https://wttr.in/{}"
 PARAMS = {
     "m": "",
     "M": "",
@@ -11,8 +11,8 @@ PARAMS = {
 }
 
 
-def show_weather(city):
-    url = URL_WEATHER.format(city)
+def fetch_weather(city):
+    url = WEATHER_URL.format(city)
     responce = requests.get(url, params=PARAMS)
     responce.raise_for_status()
     return responce.text
@@ -22,7 +22,7 @@ def main():
     locations = ["Лондон", "svo", "Череповец"]
     try:
         for city in locations:
-            print(show_weather(city))
+            print(fetch_weather(city))
     except requests.exceptions.RequestException as e:
         print("Ошибка при запросе:", e)
 
